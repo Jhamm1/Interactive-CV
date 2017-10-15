@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  product-service:
+    build: ./product
+    volumes:
+      - ./product:/usr/src/app
+    ports:
+      - 5020:80
+  
+  product-servicetwo:
+    build: ./product-go
+    volumes:
+      - ./product-go:/usr/src/app
+    ports:
+      - 5025:8082
+  
+  website:
+    image: php:apache
+    volumes:
+      - ./website:/var/www/html
+    ports:
+      - 5022:80
+    depends_on:
+      - product-service
